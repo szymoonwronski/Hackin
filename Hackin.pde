@@ -6,7 +6,7 @@ int state, currentRound;
 boolean con;
 
 String[] shapes = {"triangle", "square", "rectangle", "circle"};
-String[] colors = {"red", "yellow", "orange", "blue" ,"purple", "green"};
+String[] colors = {"red", "yellow", "orange", "blue" ,"purple", "green", "pink"};
 String[] questions = {"shape", "shape color", "background color"};
 
 Button button;
@@ -35,7 +35,7 @@ void setup() {
   
   numberboxes = new Numberbox[5];
   for(int i = 0; i < 5; i++) {
-    numberboxes[i] = new Numberbox(width / 2, height / 10, width / 2, 50 + i * height / 8);
+    numberboxes[i] = new Numberbox(width / 2, height / 10, width / 2, 50 + i * height / 8, i);
   }
   numberboxes[0].label = "Number Of Segments";
   numberboxes[0].value = "6";
@@ -251,23 +251,8 @@ void menu() {
       con = false;
     }
   }
-  
   if(button.buttonPressed()) {
-    if(checkForErrors()) {
-      setVars();
-      setLayout();
-      segments = new Segment[numberOfSegments];
-      for(int i = 0; i < numberOfSegments; i++) {
-       segments[i] = new Segment(i); 
-      }
-      randomizeSegments();
-      createQuestion();
-      timeRemained = timeToRemember;
-      s = width / (2 * timeRemained);
-      textbox.value = "";
-      currentRound = 1;
-      state = 1;
-    }
+    starting();
   }
 }
 
@@ -284,7 +269,28 @@ void winPanel() {
   text("Hacked", width / 2, height / 2);
 }
 
-void keyTyped() {
+void starting() {
+  if(checkForErrors()) {
+    setVars();
+    setLayout();
+    segments = new Segment[numberOfSegments];
+    for(int i = 0; i < numberOfSegments; i++) {
+     segments[i] = new Segment(i); 
+    }
+    randomizeSegments();
+    createQuestion();
+    activeNumberbox.isActive = false;
+    con = false;
+    activeNumberbox = numberboxes[0];
+    timeRemained = timeToRemember;
+    s = width / (2 * timeRemained);
+    textbox.value = "";
+    currentRound = 1;
+    state = 1;
+  }
+}
+
+void keyPressed() {
   if(state == 2) {
     if(key == ENTER) {
       state = 3;
@@ -294,12 +300,33 @@ void keyTyped() {
     else if(key == BACKSPACE && textbox.value.length() > 0) textbox.value = textbox.value.substring(0, textbox.value.length() - 1);
     else if(key != BACKSPACE) textbox.value += key;
   }
-  if(state == 0) {
-    if(!con) {
-      activeNumberbox.value = "";
-      con = true;
+  else if(state == 0) {
+    if(key == CODED) {
+      if(keyCode == UP && activeNumberbox.id > 0) {
+        activeNumberbox.isActive = false;
+        activeNumberbox = numberboxes[activeNumberbox.id - 1];
+        activeNumberbox.isActive = true;
+        con = false;
+      }
+      else if(keyCode == DOWN && activeNumberbox.id < 4) {
+        activeNumberbox.isActive = false;
+        activeNumberbox = numberboxes[activeNumberbox.id + 1];
+        activeNumberbox.isActive = true;
+        con = false;
+      }
     }
-    if(key == BACKSPACE && activeNumberbox.value.length() > 0) activeNumberbox.value = activeNumberbox.value.substring(0, activeNumberbox.value.length() - 1);
-    else if(key != BACKSPACE) activeNumberbox.value += key;
+    else {
+      if(key == ENTER) {
+        starting();
+      }
+      else {
+        if(!con) {
+          activeNumberbox.value = "";
+          con = true;
+        }
+        if(key == BACKSPACE && activeNumberbox.value.length() > 0) activeNumberbox.value = activeNumberbox.value.substring(0, activeNumberbox.value.length() - 1);
+        else if(key != BACKSPACE) activeNumberbox.value += key;
+      }
+    }
   }
 }

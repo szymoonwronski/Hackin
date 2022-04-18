@@ -3,12 +3,14 @@ class Numberbox {
   String value;
   String label;
   boolean isActive;
+  int id;
   
-  Numberbox(int a, int b, int c, int d) {
+  Numberbox(int a, int b, int c, int d, int e) {
     w = a;
     h = b;
     x = c;
     y = d;
+    id = e;
     value = "";
     label = "";
     isActive = false;

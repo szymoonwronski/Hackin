@@ -36,6 +36,7 @@ class Segment {
       case "blue": fill(0, 0, 255); break;
       case "purple": fill(150, 0, 200); break;
       case "green": fill(0, 255, 0); break;
+      case "pink": fill(255,192,203); break;
     }
     rectMode(CORNER);
     ellipseMode(CORNER);
@@ -50,6 +51,7 @@ class Segment {
       case "blue": fill(0, 0, 255); break;
       case "purple": fill(150, 0, 200); break;
       case "green": fill(0, 255, 0); break;
+      case "pink": fill(255,192,203); break;
     }
     switch(shape) {
       case "triangle": triangle(spaceleft + space * x + (x - 1) * scale + scale / 2, space * y + (y - 1) * scale + scale / 6,
