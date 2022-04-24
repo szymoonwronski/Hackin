@@ -111,6 +111,7 @@ void draw() {
 }
 
 void setLayout() {
+  
   if(numberOfSegments % 5 == 0) {
     cols = 5;
     rows = numberOfSegments / 5;
@@ -241,6 +242,17 @@ boolean checkForErrors() {
 void menu() {
   button.display();
   displayError();
+  if(mousePressed) {
+    boolean x = false;
+    for(Numberbox n : numberboxes) {
+      if(n.numberboxHover()) x = true;
+    }
+    if(!x) {
+      activeNumberbox.isActive = false;
+      activeNumberbox = numberboxes[0];
+      con = false;
+    }
+  }
   for(Numberbox n : numberboxes) {
     n.display();
     if(n.numberboxPressed()) {
