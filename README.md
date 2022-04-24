@@ -12,6 +12,3 @@ You have to remember the order of the segments and answer the questions.
 3. Answer Phase - answer the questions
 <img width="1194" alt="Screenshot 2022-04-23 at 22 49 39" src="https://user-images.githubusercontent.com/86881288/164945554-e80c774b-bd65-47ee-ae72-49e28b90ad6b.png">
 In order to win you have to give the correct answer in a row as many times as you have set the rounds.
-
-Example game
-https://user-images.githubusercontent.com/86881288/164960535-665d56d4-ba46-460d-a8f1-328ab6b4df92.mov
